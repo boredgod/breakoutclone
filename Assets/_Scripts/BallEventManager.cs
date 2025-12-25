@@ -2,7 +2,7 @@ using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.Events;
 
-public static class EventManager
+public static class BallEventManager
 {
     static PlayerController invokerBallFired;
     static BottomWallDeath invokerBWD;

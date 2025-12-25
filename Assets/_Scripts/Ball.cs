@@ -16,8 +16,8 @@ public class Ball : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         initialLocalPostion = transform.localPosition;
         parentPaddle = transform.parent.gameObject;
-        EventManager.AddBWDListener(ResetBall);
-        EventManager.AddBallFiredListener(BallFired);
+        BallEventManager.AddBWDListener(ResetBall);
+        BallEventManager.AddBallFiredListener(BallFired);
     }
 
     // Update is called once per frame

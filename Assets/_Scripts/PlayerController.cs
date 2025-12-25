@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        EventManager.AddBallFiredInvoker(this);
+        BallEventManager.AddBallFiredInvoker(this);
     }
 
     // Update is called once per frame
