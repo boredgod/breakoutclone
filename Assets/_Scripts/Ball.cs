@@ -9,12 +9,15 @@ public class Ball : MonoBehaviour
     bool isLaunched = false;
     GameObject parentPaddle;
     Vector3 initialLocalPostion;
+    int ballCount = 1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         initialLocalPostion = transform.localPosition;
         parentPaddle = transform.parent.gameObject;
+        EventManager.AddBWDListener(ResetBall);
+        EventManager.AddBallFiredListener(BallFired);
     }
 
     // Update is called once per frame

@@ -10,10 +10,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]Camera mainCamera;
     float maxMove = 1f;
     float minMove = -1f;
+
+    BallEvents ballEvents = new BallEvents();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        EventManager.AddBallFiredInvoker(this);
     }
 
     // Update is called once per frame
@@ -21,8 +23,11 @@ public class PlayerController : MonoBehaviour
     {
         
         ProcessTranslate();
-        ProcessFire();
+    }
 
+    void FixedUpdate()
+    {
+        ProcessFire();
     }
 
     private void ProcessTranslate()
@@ -49,6 +54,11 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Fire");
             //Invoke Event from Ball
+            ballEvents.Invoke();
         }
+    }
+    public void AddBallFiredListener(UnityAction listener)
+    {
+        ballEvents.AddListener(listener);
     }
 }
