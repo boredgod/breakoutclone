@@ -5,19 +5,16 @@ public class Ball : MonoBehaviour
     [SerializeField] float initialSpeed = 5f;
     [SerializeField] float minSpeed = 4f;
     [SerializeField] float maxSpeed = 8f;
-    [SerializeField]Transform paddleTransform;
     Rigidbody2D rb;
-    Vector3 initialPaddleOffset;
-
     bool isLaunched = false;
+    GameObject parentPaddle;
+    Vector3 initialLocalPostion;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        if(paddleTransform != null)
-        {
-            initialPaddleOffset = transform.position - paddleTransform.position;
-        }
+        initialLocalPostion = transform.localPosition;
+        parentPaddle = transform.parent.gameObject;
     }
 
     // Update is called once per frame
@@ -43,4 +40,13 @@ public class Ball : MonoBehaviour
         isLaunched = true;
         rb.linearVelocity = Vector2.up * initialSpeed;
     }
+
+    void ResetBall()
+    {
+        isLaunched = false;
+        rb.linearVelocity = Vector2.zero;
+        transform.SetParent(parentPaddle.transform);
+        transform.localPosition = initialLocalPostion;
+    }
+
 }
