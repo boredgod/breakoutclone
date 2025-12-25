@@ -18,7 +18,10 @@ public class BottomWallDeath : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        ballEvents.Invoke();
+        if(collision.CompareTag("Ball"))
+        {
+            ballEvents.Invoke();
+        }
     }
 
     public void AddBottomWallDeathListener(UnityAction listener)
