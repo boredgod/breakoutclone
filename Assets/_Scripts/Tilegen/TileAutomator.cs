@@ -8,7 +8,6 @@ public class TileAutomator : MonoBehaviour
     [Range(1,8)][SerializeField] int birthLimit;
     [Range(1,8)][SerializeField] int deathLimit;
     [Range(1,10)][SerializeField] int numRepeat;
-    int count = 0;
     int[,] terrainMap;
     [SerializeField] Vector3Int tMapSize;
 
@@ -16,6 +15,7 @@ public class TileAutomator : MonoBehaviour
     [SerializeField]Tilemap bottomMap;
     [SerializeField]Tile topTile;
     [SerializeField] Tile bottomTile;
+    [SerializeField] GameObject prefabBrick;
 
     int width;
     int height;
@@ -59,6 +59,7 @@ public class TileAutomator : MonoBehaviour
                 }
             }
         }
+
     }
     int[,] GenerateTilePosition(int[,] oldMap)
     {

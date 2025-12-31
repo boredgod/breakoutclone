@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]InputActionReference fireAction;
 
     [SerializeField]float moveFactor = 5f;
-    [SerializeField]Camera mainCamera;
+
+    ScreenUtility mainCamera;
     float maxMove = 1f;
     float minMove = -1f;
 
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        mainCamera = GameObject.FindGameObjectWithTag("Manager").GetComponent<ScreenUtility>();
         BallEventManager.AddBallFiredInvoker(this);
     }
 
@@ -42,8 +44,8 @@ public class PlayerController : MonoBehaviour
     void ProcessPaddleBounds()
     {
         Vector2 spriteSize = GetComponent<SpriteRenderer>().bounds.size;
-        float screenWidth = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0f, 0f)).x;
-        float screenHeight = mainCamera.ScreenToWorldPoint(new Vector3(0f, Screen.height, 0f)).y;
+        float screenWidth = mainCamera.ScreenWidth;
+        float screenHeight = mainCamera.ScreenHeight;
         Vector3 objectTransform = transform.position;
         objectTransform.x = Mathf.Clamp(objectTransform.x, -screenWidth + spriteSize.x / 2f, screenWidth - spriteSize.x / 2f);
         transform.position = objectTransform;
@@ -52,7 +54,7 @@ public class PlayerController : MonoBehaviour
     {
         if(fireAction.action.WasPressedThisFrame())
         {
-            Debug.Log("Fire");
+            // Debug.Log("Fire");
             //Invoke Event from Ball
             ballEvents.Invoke();
         }

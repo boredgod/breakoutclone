@@ -1,10 +1,8 @@
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UIElements;
 
 public class CameraBounds : MonoBehaviour
 {
-    [SerializeField]Camera mainCamera;
+    ScreenUtility mainCamera;
     [SerializeField]BoxCollider2D topWall;
     [SerializeField]BoxCollider2D bottomWall;
     [SerializeField]BoxCollider2D leftWall;
@@ -16,7 +14,7 @@ public class CameraBounds : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        mainCamera = GetComponent<ScreenUtility>();
     }
     // Update is called once per frame
     void Update()
@@ -39,7 +37,8 @@ public class CameraBounds : MonoBehaviour
 
     private void ScreenSizeCalculation()
     {
-        screenWidth = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0f, 0f)).x;
-        screenHeight = mainCamera.ScreenToWorldPoint(new Vector3(0f, Screen.height, 0f)).y;
+        screenWidth = mainCamera.ScreenWidth;
+        screenHeight = mainCamera.ScreenHeight;
+        // Debug.Log("Width: " + screenWidth + " Height: " + screenHeight);
     }
     }

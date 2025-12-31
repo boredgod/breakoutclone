@@ -197,7 +197,7 @@ Transform:
   m_GameObject: {fileID: 194259221}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.54, z: 0}
+  m_LocalPosition: {x: 0, y: 1.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -276,7 +276,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 78b19c9524ecede49a503107d6a8a2be, type: 2}
   m_IncludeLayers:
@@ -324,7 +324,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.25
+  m_Radius: 0.5
 --- !u!114 &194259226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,9 +337,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ea623346be88143bd863f2b742abef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ball
-  initialSpeed: 5
-  minSpeed: 4
-  maxSpeed: 8
+  initialSpeed: 10
+  minSpeed: 8
+  maxSpeed: 20
   maxBounceAngle: 75
 --- !u!1 &519420028
 GameObject:
@@ -447,7 +447,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -488,9 +488,10 @@ GameObject:
   m_Component:
   - component: {fileID: 770288099}
   - component: {fileID: 770288100}
+  - component: {fileID: 770288101}
   m_Layer: 0
   m_Name: _GM
-  m_TagString: Untagged
+  m_TagString: Manager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -522,11 +523,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d8f32b94fa8b94f803dd17162257e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraBounds
-  mainCamera: {fileID: 519420031}
   topWall: {fileID: 1754278057}
   bottomWall: {fileID: 1778592624}
   leftWall: {fileID: 2022847584}
   rightWall: {fileID: 785144534}
+--- !u!114 &770288101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 770288098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a860a9895448840927d455d40e679d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenUtility
+  mainCamera: {fileID: 519420031}
 --- !u!1 &785144532
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,7 +552,7 @@ GameObject:
   - component: {fileID: 785144534}
   m_Layer: 0
   m_Name: RightWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -631,7 +644,7 @@ GameObject:
   - component: {fileID: 1754278057}
   m_Layer: 0
   m_Name: TopWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -998,7 +1011,7 @@ Transform:
   m_GameObject: {fileID: 2016717593}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -5.61, z: 0}
+  m_LocalPosition: {x: 0, y: -11.56, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1019,8 +1032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveAction: {fileID: 1704273337}
   fireAction: {fileID: 103499270}
-  moveFactor: 25
-  mainCamera: {fileID: 519420031}
+  moveFactor: 45
 --- !u!212 &2016717598
 SpriteRenderer:
   serializedVersion: 2
@@ -1116,15 +1128,15 @@ BoxCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0.0625, y: 0.0625, z: 0.0625, w: 0.0625}
+    border: {x: 0.125, y: 0.125, z: 0.125, w: 0.125}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4, y: 0.4375}
+    oldSize: {x: 8, y: 0.875}
     newSize: {x: 4, y: 0.4375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 4, y: 0.4375}
+  m_Size: {x: 8, y: 0.875}
   m_EdgeRadius: 0
 --- !u!1 &2022847582
 GameObject:
@@ -1138,7 +1150,7 @@ GameObject:
   - component: {fileID: 2022847584}
   m_Layer: 0
   m_Name: LeftWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

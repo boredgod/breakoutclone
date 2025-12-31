@@ -8,6 +8,8 @@ public class Ball : MonoBehaviour
     
     [SerializeField] float maxBounceAngle = 75;
     Rigidbody2D rb;
+
+    ScreenUtility mainCamera;
     bool isLaunched = false;
     GameObject parentPaddle;
     Vector3 initialLocalPostion;
@@ -15,6 +17,7 @@ public class Ball : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        mainCamera = GameObject.FindGameObjectWithTag("Manager").GetComponent<ScreenUtility>();
         rb = GetComponent<Rigidbody2D>();
         initialLocalPostion = transform.localPosition;
         parentPaddle = transform.parent.gameObject;
@@ -61,17 +64,39 @@ public class Ball : MonoBehaviour
     {        
         if (collision.gameObject.CompareTag("Player") && isLaunched)
         {
-            Vector3 paddlePosition = collision.transform.position;
-            Vector2 contactPoint = collision.GetContact(0).point;
-            float offset = paddlePosition.x - contactPoint.x;
-            float width = collision.collider.bounds.size.x / 2f;
-            float currentAngle = Vector2.SignedAngle(Vector2.up, rb.linearVelocity);
-            float bounceAngle = (offset / width) * maxBounceAngle;
-            float newAngle = Mathf.Clamp(currentAngle + bounceAngle, -maxBounceAngle, maxBounceAngle);
+            Quaternion rotation = CalculateReflectAngle(collision);
 
-            Quaternion rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
             rb.linearVelocity = rotation * Vector2.up * rb.linearVelocity.magnitude;
+        }
+        else if(collision.gameObject.CompareTag("Wall") && isLaunched)
+        {
+            Quaternion rotation = CalculateReflectAngle(collision);
+            float screenWidth = mainCamera.ScreenWidth;
+            if(gameObject.transform.position.x > screenWidth/2f)
+            {
+                rb.linearVelocity = rotation * Vector2.left * rb.linearVelocity.magnitude;
+            }
+            else if(gameObject.transform.position.x < screenWidth/2f)
+            {
+                rb.linearVelocity = rotation * Vector2.right * rb.linearVelocity.magnitude;
+            }
+            else
+            {
+                rb.linearVelocity = rotation * Vector2.down * rb.linearVelocity.magnitude;
+            }
         }
     }
 
+    private Quaternion CalculateReflectAngle(Collision2D collision)
+    {
+        Vector3 colliderPosition = collision.transform.position;
+        Vector2 contactPoint = collision.GetContact(0).point;
+        float offset = colliderPosition.x - contactPoint.x;
+        float width = collision.collider.bounds.size.x / 2f;
+        float currentAngle = Vector2.SignedAngle(Vector2.up, rb.linearVelocity);
+        float bounceAngle = (offset / width) * maxBounceAngle;
+        float newAngle = Mathf.Clamp(currentAngle + bounceAngle, -maxBounceAngle, maxBounceAngle);
+        Quaternion rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
+        return rotation;
+    }
 }
