@@ -11,30 +11,36 @@ public class TileAutomator : MonoBehaviour
     int[,] terrainMap;
     [SerializeField] Vector3Int tMapSize;
 
-    [SerializeField]Tilemap topMap;
-    [SerializeField]Tilemap bottomMap;
-    [SerializeField]Tile topTile;
-    [SerializeField] Tile bottomTile;
+    // [SerializeField]Tilemap topMap;
+    // [SerializeField]Tilemap bottomMap;
+    // [SerializeField] RuleTile topTile;
+    // [SerializeField] RuleTile bottomTile;
     [SerializeField] GameObject prefabBrick;
+    SpriteRenderer spriteRenderer;
+    float spriteWidth;
+    float spriteHeight;
 
     int width;
     int height;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        spriteRenderer = prefabBrick.GetComponent<SpriteRenderer>();
+        spriteWidth = spriteRenderer.bounds.size.x;
+        spriteHeight = spriteRenderer.bounds.size.y;
+        DoSimulation(numRepeat);
     }
 
     // Update is called once per frame
     void Update()
     {
-        DoSimulation(numRepeat);
+       
         // ClearMaps(true); 
     }
 
     void DoSimulation(int numRepeat)
     {
-        ClearMaps(false);
+        // ClearMaps(false);
         width = tMapSize.x;
         height = tMapSize.y;
 
@@ -54,8 +60,9 @@ public class TileAutomator : MonoBehaviour
             {
                 if(terrainMap[i,j] == 1)
                 {
-                    topMap.SetTile(new Vector3Int(-i + width/2, -j + height/2, 0), topTile);
-                    bottomMap.SetTile(new Vector3Int(-i + width/2, -j + height/2, 0), bottomTile);
+                    // topMap.SetTile(new Vector3Int(-i + width/2, -j + height/2, 0), topTile);
+                    // bottomMap.SetTile(new Vector3Int(-i + width/2, -j + height/2, 0), bottomTile);
+                    Instantiate(prefabBrick, new Vector3Int(-i + width/2, 1+ -j + height/2, 0), Quaternion.identity);
                 }
             }
         }
@@ -125,13 +132,13 @@ public class TileAutomator : MonoBehaviour
             }
         }
     }
-    void ClearMaps(bool complete)
-    {
-        topMap.ClearAllTiles();
-        bottomMap.ClearAllTiles();
-        if(complete)
-        {
-            terrainMap = null;
-        }
-    }
+    // void ClearMaps(bool complete)
+    // {
+    //     topMap.ClearAllTiles();
+    //     bottomMap.ClearAllTiles();
+    //     if(complete)
+    //     {
+    //         terrainMap = null;
+    //     }
+    // }
 }
